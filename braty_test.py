@@ -3,7 +3,12 @@ import pandas as pd
 import shutil
 import itertools
 import os
-import math
+import time
+import csv
+
+start_time = time.time()
+print("start")
+
 
 
 # this function converts the excel file at the specified path into a dictionary
@@ -78,6 +83,23 @@ def copy_file(store_path, lst):
         # For other errors
         except:
             print("Error occurred while copying file.")
+            
+def not_found_excel(not_found,data_type,path):
+    if data_type == 1:     
+        header = ['FileName', 'FileType']
+        with open(path, 'w',encoding='UTF8', newline='') as output:
+            writer = csv.writer(output)
+            writer.writerow(header)
+            for key, value in not_found:
+                writer.writerow([key, value])
+            
+    else:
+        header = ['FileName']
+        with open(path, 'w',encoding='UTF8', newline='') as output:
+            writer = csv.writer(output)
+            writer.writerow(header)
+            for value in not_found:
+                writer.writerow([value])
 
 
 # path containing the excel sheet with requirements(USE BACK SLASH!!!)
@@ -88,6 +110,9 @@ excel_path2 = "D:/masterfilerecd.xlsx"
 
 # path for the destination of the copied files
 destination = "D:/requiredfiles"
+
+#path for excel files of not found
+CSV_path = 'C:/Users/nikil/Desktop/output.csv'
 
 # getting file the data from excel sheet to dictionary
 reqFiles, data_type = excel_to_dict(excel_path1)
@@ -101,3 +126,12 @@ else:
     print("All files are found")
 # copying files to destination folder
 copy_file(destination, lst)
+
+not_found_excel(Not_found, data_type, CSV_path)
+
+print("done")
+ 
+end_time = time.time()
+ 
+print("excecution time", end_time - start_time)
+
