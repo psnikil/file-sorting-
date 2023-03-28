@@ -124,10 +124,14 @@ if Not_found:
     print("files not found are:", Not_found)
 else:
     print("All files are found")
+    
+#creates excel file with all files not found    
+not_found_excel(Not_found, data_type, CSV_path)    
+    
 # copying files to destination folder
 copy_file(destination, lst)
 
-not_found_excel(Not_found, data_type, CSV_path)
+
 
 print("done")
  
